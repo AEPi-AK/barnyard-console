@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'LatoWebBold';
+  src: url('fonts/Lato-Bold.woff') format('woff');
+  font-style: normal;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: 'LatoWebSemibold';
+  src: url('fonts/Lato-Semibold.woff') format('woff');
+  font-style: normal;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: 'LatoWeb';
+  src: url('fonts/Lato-Regular.woff') format('woff');
+  font-style: normal;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+}
