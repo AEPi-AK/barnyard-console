@@ -2,6 +2,7 @@
   "name": "barnyard-console",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "rc-slider": "^7.0.0",
     "react": "^15.5.3",
@@ -12,7 +13,7 @@
     "react-scripts": "0.9.5"
   },
   "scripts": {
-    "deploy": "react-scripts build && mv build ../app && cd .. && git add app && git commit -m deploy && git push resin master",
+    "deploy": "react-scripts build && rm -rf ../app/build && mv build ../app/ && cd .. && git add app && git commit -m 'deploy to resin' && git push resin master",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
