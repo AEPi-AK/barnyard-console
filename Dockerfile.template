@@ -25,7 +25,8 @@ RUN apt-get update && apt-get install -y \
   libxss1 \
   libnss3-dev \
   avahi-daemon \
-  nss-mdns \
+  avahi-utils \
+  libnss-mdns \
   fluxbox \
   libsmbclient \
   libssh-4 \
@@ -54,6 +55,9 @@ COPY ./app ./
 
 ## uncomment if you want systemd
 ENV INITSYSTEM on
+
+RUN systemctl enable avahi-daemon
+
 
 # Start app
 CMD ["bash", "/usr/src/app/start.sh"]
