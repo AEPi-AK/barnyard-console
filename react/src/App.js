@@ -62,6 +62,7 @@ class App extends Component {
     super();
     this.state = {
       normalMode: true,
+      debugInfo: {},
     };
   }	  
 
@@ -88,6 +89,12 @@ class App extends Component {
   }
 
   render() {
+    fetch('${SERVER_URL}/gamestate')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      this.setState({debugInfo: responseJson})
+    })
+    console.log(this.state.debugInfo);
     return (
       <div className="App">
         {this.state.normalMode ?
@@ -102,11 +109,12 @@ class App extends Component {
             </div>
           </div>
 	:
-          <ReactJsonSyntaxHighlighter obj={JSON.parse(`{"phaseTime":"0","player1":{"slot0":"NoHead","slot1":"NoBody","joined":"False","slot2":"NoLeg"},"location":"Tundra","settings":{"volume":"50","brightness":"250"},"currentPhase":"GameWaiting","timeSincePhaseStart":"2630.62617","player2":{"slot0":"NoHead","slot1":"NoBody","joined":"False","slot2":"NoLeg"},"winner":"Player1"}`)} />
-	}
+            <ReactJsonSyntaxHighlighter obj={this.state.debugInfo} />
+	  //null
+        }
       </div>
     );
   }
 }
 
-export default App;
+export default App; 
