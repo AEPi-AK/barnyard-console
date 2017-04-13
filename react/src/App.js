@@ -7,6 +7,7 @@ import DebugIcon from './images/debug.svg'
 import BrightnessIcon from './images/brightness.svg'
 import VolumeIcon from './images/volume.svg'
 import './App.css'
+import ReactJsonSyntaxHighlighter from 'react-json-syntax-highlighter'
 
 const SERVER_URL="http://barnyard-nuc.local"
 
@@ -82,9 +83,14 @@ class App extends Component {
     })
   }
 
+  onDebugClick() {
+    this.setState({normalMode: !this.state.normalMode});
+  }
+
   render() {
     return (
-        <div className="App">
+      <div className="App">
+        {this.state.normalMode ?
           <div className="App-settingsPanel">
             <div className="App-sliders">
               <ConsoleSlider icon={BrightnessIcon} min={0} max={255} onChange={this.onBrightnessChange}/>
@@ -92,10 +98,13 @@ class App extends Component {
             </div>
             <div className="App-buttons">
               <ConsoleButton className="ResetButton" label="reset" icon={ResetIcon} onClick={this.onResetClick}/>
-              <ConsoleButton className="DebugButton" label="debug" icon={DebugIcon}/>
+              <ConsoleButton className="DebugButton" label="debug" icon={DebugIcon} onClick={this.onDebugClick.bind(this)}/>
             </div>
           </div>
-        </div>
+	:
+          <ReactJsonSyntaxHighlighter obj={JSON.parse(`{"phaseTime":"0","player1":{"slot0":"NoHead","slot1":"NoBody","joined":"False","slot2":"NoLeg"},"location":"Tundra","settings":{"volume":"50","brightness":"250"},"currentPhase":"GameWaiting","timeSincePhaseStart":"2630.62617","player2":{"slot0":"NoHead","slot1":"NoBody","joined":"False","slot2":"NoLeg"},"winner":"Player1"}`)} />
+	}
+      </div>
     );
   }
 }
