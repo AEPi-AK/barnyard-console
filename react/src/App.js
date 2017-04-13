@@ -44,7 +44,7 @@ class ConsoleSlider extends Component {
     return (
       <div className="ConsoleSlider">
         <img className="ConsoleSlider-icon" src={this.props.icon}/>
-        <Slider className="ConsoleSlider-slider" min={this.props.min} max={this.props.max} onChange={this.onChange} value={this.props.value}/>
+        <Slider className="ConsoleSlider-slider" min={this.props.min} max={this.props.max} onChange={this.onChange} defaultValue={Number(this.props.value)}/>
 	{this.renderLabel()}
       </div>
     );
@@ -93,12 +93,6 @@ class App extends Component {
   }
 
   render() {
-    fetch('${SERVER_URL}/gamestate')
-    .then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({debugInfo: responseJson})
-    })
-    console.log(this.state.debugInfo);
     return (
       <div className="App">
           <div className="App-settingsPanel">
@@ -111,8 +105,7 @@ class App extends Component {
               <ConsoleButton className="DebugButton" label="debug" icon={DebugIcon} onClick={this.onDebugClick.bind(this)}/>
             </div>
           </div>
-	        {this.state.normalMode ? null :
-  	  		  <ReactJsonSyntaxHighlighter obj={this.state.gamestate} />
+	        {this.state.normalMode ? null : <ReactJsonSyntaxHighlighter obj={this.state.gamestate} />
     	    }
       </div>
     );
