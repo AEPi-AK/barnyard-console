@@ -10,7 +10,7 @@
 .App-sliders {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 387px;
 }
 
 .App-buttons {
@@ -57,5 +57,22 @@
 .ConsoleSlider {
   display: flex;
   flex-direction: row;
-  height: 40px;
+  align-items: center;
+  height: 80px;
 }
+
+.ConsoleSlider-slider {
+  display: flex;
+  width: 300px;
+}
+
+.ConsoleSlider-icon {
+  height: 40px;
+  margin-right: 12px;
+}
+
+.ConsoleSlider-label {
+  margin-left: 12px;
+}
+
+
