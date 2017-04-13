@@ -9,7 +9,8 @@ import VolumeIcon from './images/volume.svg'
 import './App.css'
 import ReactJsonSyntaxHighlighter from 'react-json-syntax-highlighter'
 
-const SERVER_URL="http://barnyard-nuc.local"
+const REFRESH_INTERVAL = 250 //ms
+const SERVER_URL = "http://barnyard-nuc.local"
 
 class ConsoleButton extends Component {
 
@@ -27,16 +28,10 @@ class ConsoleButton extends Component {
 }
 
 class ConsoleSlider extends Component {
-  constructor() {
-    super();
-    this.state = {
-      value: 0,
-    };
-  }
-
-  renderLabel() {
+  
+	renderLabel() {
     return (
-      <div className="ConsoleSlider-label"> {Math.round(this.state.value/this.props.max*100)}% </div>
+      <div className="ConsoleSlider-label"> {Math.round(this.props.value/this.props.max*100)}% </div>
     );
   }
 
@@ -49,7 +44,7 @@ class ConsoleSlider extends Component {
     return (
       <div className="ConsoleSlider">
         <img className="ConsoleSlider-icon" src={this.props.icon}/>
-        <Slider className="ConsoleSlider-slider" min={this.props.min} max={this.props.max} onChange={this.onChange}/>
+        <Slider className="ConsoleSlider-slider" min={this.props.min} max={this.props.max} onChange={this.onChange} value={this.props.value}/>
 	{this.renderLabel()}
       </div>
     );
@@ -60,9 +55,10 @@ class App extends Component {
 
   constructor() {
     super();
+    setInterval(() => this.onRefreshTimer(), REFRESH_INTERVAL)
     this.state = {
       normalMode: true,
-      debugInfo: {},
+      gamestate: {settings: {brightness: 0, volume: 0}},
     };
   }	  
 
@@ -87,34 +83,34 @@ class App extends Component {
   onDebugClick() {
     this.setState({normalMode: !this.state.normalMode});
   }
-
-  render() {
-    fetch('${SERVER_URL}/gamestate')
+  
+  onRefreshTimer() {
+    fetch(`${SERVER_URL}/gamestate`)
     .then((response) => response.json())
     .then((responseJson) => {
-      this.setState({debugInfo: responseJson})
+      this.setState({gamestate: responseJson})
     })
-    console.log(this.state.debugInfo);
+  }
+
+  render() {
     return (
       <div className="App">
-        {this.state.normalMode ?
           <div className="App-settingsPanel">
             <div className="App-sliders">
-              <ConsoleSlider icon={BrightnessIcon} min={0} max={255} onChange={this.onBrightnessChange}/>
-              <ConsoleSlider icon={VolumeIcon} min={0} max={100} onChange={this.onVolumeChange}/>
+              <ConsoleSlider icon={BrightnessIcon} min={0} max={255} onChange={this.onBrightnessChange} value={this.state.gamestate.settings.brightness}/>
+              <ConsoleSlider icon={VolumeIcon} min={0} max={100} onChange={this.onVolumeChange} value={this.state.gamestate.settings.volume}/>
             </div>
             <div className="App-buttons">
               <ConsoleButton className="ResetButton" label="reset" icon={ResetIcon} onClick={this.onResetClick}/>
               <ConsoleButton className="DebugButton" label="debug" icon={DebugIcon} onClick={this.onDebugClick.bind(this)}/>
             </div>
           </div>
-	:
-            <ReactJsonSyntaxHighlighter obj={this.state.debugInfo} />
-	  //null
-        }
+	        {this.state.normalMode ? null :
+  	  		  <ReactJsonSyntaxHighlighter obj={this.state.gamestate} />
+    	    }
       </div>
     );
   }
 }
 
-export default App; 
+export default App;
