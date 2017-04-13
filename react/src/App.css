@@ -5,6 +5,7 @@
 .App-settingsPanel {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .App-sliders {
@@ -75,4 +76,26 @@
   margin-left: 12px;
 }
 
+.rc-slider-handle {
+  width: 40px;
+  height: 40px;
+  margin-top: -15px;
+  background-color: #2b2e30;
+  border: 2px solid white;
+}
 
+.rc-slider-handle:hover {
+  border-color: white;
+}
+
+.rc-slider-rail {
+  height: 15px;
+  background-color: #595f62;
+  border: 1px solid white;
+}
+
+.rc-slider-track {
+  height: 15px;
+  background-color: #595f62;
+  border: 1px solid white;
+}

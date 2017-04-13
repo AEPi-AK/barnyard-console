@@ -8,13 +8,15 @@ import BrightnessIcon from './images/brightness.svg'
 import VolumeIcon from './images/volume.svg'
 import './App.css'
 
+const SERVER_URL="http://barnyard-nuc.local"
+
 class ConsoleButton extends Component {
 
   render() {
-    const { className, label, icon } = this.props
+    const { className, label, icon, onClick } = this.props
     const buttonClasses = classNames('ConsoleButton', this.props.className)
     return (
-      <div className={buttonClasses}>
+      <div className={buttonClasses} onClick={onClick}>
         <img className="ConsoleButton-icon" src={icon}/>
         <div>{label}</div>
       </div>
@@ -36,8 +38,9 @@ class ConsoleSlider extends Component {
       <div className="ConsoleSlider-label"> {Math.round(this.state.value/this.props.max*100)}% </div>
     );
   }
-	
+
   onChange = (value) => {
+    {this.props.onChange(value)}
     this.setState({value: value});
   }
 
@@ -53,20 +56,46 @@ class ConsoleSlider extends Component {
 }
 
 class App extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      normalMode: true,
+    };
+  }	  
+
+  onBrightnessChange = (value) => {
+    fetch(`${SERVER_URL}/settings/brightness/${value}`, {
+      method: "POST",
+    })
+  }
+
+  onVolumeChange = (value) => {
+    fetch(`${SERVER_URL}/settings/volume/${value}`, {
+      method: "POST",
+    })
+  }
+
+  onResetClick() {
+    fetch(`${SERVER_URL}/reset`, {
+      method: "POST",
+    })
+  }
+
   render() {
     return (
-      <div className="App">
-        <div className="App-settingsPanel">
-          <div className="App-sliders">
-            <ConsoleSlider icon={BrightnessIcon} percentage={50} min={0} max={255}/>
-            <ConsoleSlider icon={VolumeIcon} percentage={50} min={0} max={100}/>
-          </div>
-          <div className="App-buttons">
-            <ConsoleButton className="ResetButton" label="reset" icon={ResetIcon}/>
-            <ConsoleButton className="DebugButton" label="debug" icon={DebugIcon}/>
+        <div className="App">
+          <div className="App-settingsPanel">
+            <div className="App-sliders">
+              <ConsoleSlider icon={BrightnessIcon} min={0} max={255} onChange={this.onBrightnessChange}/>
+              <ConsoleSlider icon={VolumeIcon} min={0} max={100} onChange={this.onVolumeChange}/>
+            </div>
+            <div className="App-buttons">
+              <ConsoleButton className="ResetButton" label="reset" icon={ResetIcon} onClick={this.onResetClick}/>
+              <ConsoleButton className="DebugButton" label="debug" icon={DebugIcon}/>
+            </div>
           </div>
         </div>
-      </div>
     );
   }
 }
