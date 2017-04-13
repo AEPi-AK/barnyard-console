@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y \
   libxss1 \
   libnss3-dev \
   avahi-daemon \
+  nss-mdns \
   fluxbox \
   libsmbclient \
   libssh-4 \
