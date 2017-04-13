@@ -83,7 +83,7 @@ class App extends Component {
   onDebugClick() {
     this.setState({normalMode: !this.state.normalMode});
   }
-  
+	
   onRefreshTimer() {
     fetch(`${SERVER_URL}/gamestate`)
     .then((response) => response.json())
@@ -93,6 +93,12 @@ class App extends Component {
   }
 
   render() {
+    fetch('${SERVER_URL}/gamestate')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      this.setState({debugInfo: responseJson})
+    })
+    console.log(this.state.debugInfo);
     return (
       <div className="App">
           <div className="App-settingsPanel">
@@ -113,4 +119,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App; 
