@@ -99,3 +99,29 @@
   background-color: #595f62;
   border: 1px solid white;
 }
+
+.ReactJsonSyntaxHighlighter pre {
+  font-size: 9pt;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.ReactJsonSyntaxHighlighter pre .string {
+  color: green;
+}
+
+.ReactJsonSyntaxHighlighter pre .number {
+  color: darkorange;
+}
+
+.ReactJsonSyntaxHighlighter pre .boolean {
+  color: blue;
+}
+
+.ReactJsonSyntaxHighlighter pre .null {
+  color: magenta;
+}
+
+.ReactJsonSyntaxHighlighter pre .key {
+  color: red;
+}
