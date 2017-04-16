@@ -46,7 +46,7 @@ class ConsoleSlider extends Component {
     return (
       <div className="ConsoleSlider">
         <img className="ConsoleSlider-icon" src={this.props.icon}/>
-        <Slider className="ConsoleSlider-slider" min={this.props.min} max={this.props.max} onChange={this.onChange} defaultValue={Number(this.props.value)}/>
+        <Slider className="ConsoleSlider-slider" min={this.props.min} max={this.props.max} onAfterChange={this.onChange} defaultValue={Number(this.props.value)}/>
 	{this.renderLabel()}
       </div>
     );
@@ -60,7 +60,7 @@ class App extends Component {
     setInterval(() => this.onRefreshTimer(), REFRESH_INTERVAL)
     this.state = {
       normalMode: true,
-      gamestate: {settings: {brightness: 0, volume: 0}, currentPhase: "GameWaiting", timeSincePhaseStart: 0.00},
+      gamestate: {settings: {brightness: 0, volume: 0}, currentPhase: "GameWaiting", timeSincePhaseStart: "0.00"},
     };
   }	  
 
@@ -138,9 +138,13 @@ class App extends Component {
 	      <div className="App-debugInfoPanel">
 	        <div className="App-debugInfoContents">
                   <img src={XIcon} onClick={this.onCloseClick.bind(this)}/>
-		  {this.state.gamestate.currentPhase}
+		  <div className="App-debugState"> 
+		    {this.state.gamestate.currentPhase}
+                  </div>
 		  <br/>
-                  {this.state.gamestate.timeSincePhaseStart.toFixed(1)}
+		  <div className="App-debugTime"> 
+                    ({Number(this.state.gamestate.timeSincePhaseStart).toFixed(1)} seconds)
+                  </div>
 		</div>
 	      </div>
 	    </div>
