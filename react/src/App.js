@@ -139,8 +139,11 @@ class App extends Component {
 	      </div>
 	      <div className="App-debugInfoPanel">
 	        <div className="App-debugInfoContents">
-                  <img src={XIcon} onClick={this.onCloseClick.bind(this)}/>
+		  <div className="App-debugClose">
+                    <img src={XIcon} onClick={this.onCloseClick.bind(this)}/>
+		  </div>
 		  <div className="App-debugState"> 
+		    <br/>
 		    {this.state.gamestate.currentPhase}
                   </div>
 		  <br/>

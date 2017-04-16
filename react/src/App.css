@@ -189,3 +189,9 @@ html, body, #root {
 .App-debugText {
   width: 50%;
 }
+
+.App-debugClose {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
