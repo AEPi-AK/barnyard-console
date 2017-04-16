@@ -95,7 +95,9 @@ class App extends Component {
   }
 
   onStartClick() {
-
+    fetch(`${SERVER_URL}/start`, {
+      method: "POST",
+    })
   }
 
   onCloseClick() {
